@@ -1,0 +1,124 @@
+.SubButtons {
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-evenly;
+  font-size: 20px;
+
+}
+
+.SubButton {
+  
+  height: auto;
+  width: auto;
+  background-color: black;
+  border: 1px;
+  border-color: white;
+  border-radius: 5px;
+  color: white;
+  padding: 2px;
+  margin: 2px;
+  font-size: 20px;
+
+}
+
+.SubButton:hover {
+  
+  height: auto;
+  width: auto;
+  background-color: gold;
+  border: 1px;
+  border-color: white;
+  border-radius: 5px;
+  color: orange;
+  padding: 2px;
+  margin: 2px;
+  font-size: 20px;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: gold;
+}
+
+.container {
+  margin: 1rem;
+  text-align: center;
+}
+
+.nav {
+  background-color: #1b1b1b;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.site-title {
+  font-size: 1.5rem;
+}
+
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: .25rem;
+}
+
+.nav li.active {
+  color: black;
+  font-weight: bold;
+  background-color: gold;
+}
+
+.nav li:hover {
+  background-color: #ff5e00;
+}
+
+img {
+  max-width: 100%;
+}
+
+p {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.subject-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #1b1b1b;
+  max-width: 50%; /* Set a maximum width of 50% initially */
+  min-width: 100%;
+  font-size: large;
+}
+
+/* Add a media query for smaller screens */
+@media (max-width: 480) {
+  .subject-info {
+    max-width: 100%;
+    font-size: 2rem;
+  }
+}
