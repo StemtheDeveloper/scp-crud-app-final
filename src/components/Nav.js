@@ -76,6 +76,9 @@ export default function Nav() {
           <li>
             <NavLink to="/UploadJSON">Upload JSON</NavLink>
           </li>
+          <li>
+            <NavLink to="/Gallery">Gallery</NavLink>
+          </li>
         </ul>
       </nav>
     </>

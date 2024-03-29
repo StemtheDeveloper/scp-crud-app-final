@@ -5,6 +5,7 @@ import "../styles/App.css";
 import Home from "../pages/Home.js";
 import CRUD from "../pages/CRUD.js";
 import UploadJSON from "../pages/UploadJSON.js";
+import Gallery from "../pages/Gallery.js";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/CRUD" element={<CRUD />} />
             <Route path="/UploadJSON" element={<UploadJSON />} />
+            <Route path="/Gallery" element={<Gallery />} />
           </Routes>
         </div>
       </>
