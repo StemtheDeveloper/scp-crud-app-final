@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ref, uploadBytes, getDownloadURL, listAll } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../config/fbconfig";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -11,19 +11,17 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { NavLink } from "react-router-dom";
+import "../styles/App.css";
 
 function CRUD() {
   const [subjectName, setSubjectName] = useState("");
   const [subjectDescription, setSubjectDescription] = useState("");
   const [subjectContainment, setSubjectContainment] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
-  const [imageUrls, setImageUrls] = useState([]);
   const [readData, setReadData] = useState([]);
   const [id, setId] = useState("");
   const [showDoc, setShowDoc] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-
-  const imagesListRef = ref(storage, "scp images/");
 
   useEffect(() => {
     const getData = async () => {
@@ -35,14 +33,6 @@ function CRUD() {
       setReadData(documents);
     };
     getData();
-
-    listAll(imagesListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageUrls((prev) => [...prev, url]);
-        });
-      });
-    });
   }, []);
 
   const uploadFile = () => {
@@ -50,7 +40,7 @@ function CRUD() {
     const imageRef = ref(storage, `scp images/${imageUpload.name + uuidv4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
-        setImageUrls((prev) => [...prev, url]);
+        setImageUrl(url);
       });
     });
   };
@@ -154,14 +144,11 @@ function CRUD() {
         <input
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
-          placeholder="Image"
+          placeholder="Image URL"
           required
         />
         <input type="file" onChange={handleImageFile} />
         <button onClick={uploadFile}>Upload Image</button>
-        {imageUrls.map((url, index) => (
-          <img key={index} src={url} alt={`Uploaded ${index}`} />
-        ))}
         {!showDoc ? (
           <button type="button" onClick={crudCreate}>
             <NavLink to="CRUD">Create</NavLink>

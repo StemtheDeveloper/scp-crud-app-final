@@ -1,16 +1,13 @@
 .SubButtons {
-  
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-items: center;
   justify-content: space-evenly;
   font-size: 20px;
-
 }
 
 .SubButton {
-  
   height: auto;
   width: auto;
   background-color: black;
@@ -21,11 +18,9 @@
   padding: 2px;
   margin: 2px;
   font-size: 20px;
-
 }
 
 .SubButton:hover {
-  
   height: auto;
   width: auto;
   background-color: gold;
@@ -36,7 +31,6 @@
   padding: 2px;
   margin: 2px;
   font-size: 20px;
-
 }
 
 * {
@@ -81,7 +75,7 @@ body {
   height: 100%;
   display: flex;
   align-items: center;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
 .nav li.active {
@@ -95,7 +89,28 @@ body {
 }
 
 img {
-  max-width: 100%;
+  width: 30rem;
+  height: 30rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+#imageContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* Add flex-wrap property to wrap the images */
+  justify-content: space-evenly;
+  margin: 1rem;
+  width: 100%;
+  height: auto;
+}
+#galleryCont {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 10px;
+  width: 100%;
+  height: auto;
 }
 
 p {

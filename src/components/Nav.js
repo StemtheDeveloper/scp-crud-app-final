@@ -41,15 +41,35 @@
 //   );
 // }
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SCPlogo from "../assets/SCP logo.png";
 // import { Link, NavLink, useMatch, useResolvedPath } from "react-router-dom";
 import { Link, NavLink } from "react-router-dom";
+import { auth, onAuthStateChanged } from "../config/fbconfig"; // Import auth and onAuthStateChanged
+
 import "../styles/App.css";
 import "../styles/Nav.css";
 
 export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in
+        setCurrentUser(user.email);
+      } else {
+        // User is signed out
+        setCurrentUser(null);
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
+
+  console.log("Current user:", currentUser);
 
   return (
     <>
@@ -66,6 +86,11 @@ export default function Nav() {
           <span className="bar"></span>
         </div>
 
+        <div id="currentUser">
+          <label>User: </label>
+          {currentUser ? currentUser : "Not signed in"}
+        </div>
+
         <ul className={menuOpen ? "open" : ""}>
           <li>
             <NavLink to="/">Home</NavLink>
@@ -78,6 +103,12 @@ export default function Nav() {
           </li>
           <li>
             <NavLink to="/Gallery">Gallery</NavLink>
+          </li>
+          <li>
+            <NavLink to="/SignIn">Sign In</NavLink>
+          </li>
+          <li>
+            <NavLink to="/Profile">Profile</NavLink>
           </li>
         </ul>
       </nav>

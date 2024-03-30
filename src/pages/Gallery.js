@@ -1,27 +1,32 @@
-import React, { useState } from "react";
-import firebase from "firebase/app";
-import "firebase/storage";
+import { useState, useEffect } from "react";
+import {
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  listAll,
+} from "firebase/storage";
+import { storage } from "../config/fbconfig";
 import "../styles/App.css";
-
-// Initialize Firebase
-// Replace this with your Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyDxX98ZxNczF4OH5oxNIoochInxPWQKa2k",
-  authDomain: "scp-crud-app-final.firebaseapp.com",
-  projectId: "scp-crud-app-final",
-  storageBucket: "scp-crud-app-final.appspot.com",
-  messagingSenderId: "213113067191",
-  appId: "1:213113067191:web:fa29cb0de19c7a44bedf32",
-  measurementId: "G-J64PLREZTB",
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
 
 export default function Gallery() {
   const [image, setImage] = useState(null);
   const [urls, setUrls] = useState([]);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const storageRef = ref(storage, "scp images");
+    listAll(storageRef)
+      .then((res) => {
+        res.items.forEach((itemRef) => {
+          getDownloadURL(itemRef).then((url) => {
+            setUrls((prevUrls) => [...prevUrls, url]);
+          });
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleChange = (e) => {
     if (e.target.files[0]) {
@@ -30,36 +35,47 @@ export default function Gallery() {
   };
 
   const handleUpload = () => {
-    const uploadTask = firebase
-      .storage()
-      .ref(`images/${image.name}`)
-      .put(image);
+    const storageRef = ref(storage, `scp images/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
     uploadTask.on(
       "state_changed",
       (snapshot) => {},
       (error) => {
         console.log(error);
+        setMessage("Error uploading image.");
       },
       () => {
-        firebase
-          .storage()
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then((url) => {
-            setUrls((prevUrls) => [...prevUrls, url]);
-          });
+        getDownloadURL(storageRef).then((url) => {
+          setUrls((prevUrls) => [...prevUrls, url]);
+          setMessage("Image uploaded successfully.");
+        });
       }
     );
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleChange} />
-      <button onClick={handleUpload}>Upload</button>
-      {urls.map((url, index) => (
-        <img key={index} src={url} alt="Uploaded" height="300" width="400" />
-      ))}
-    </div>
+    <>
+      <h1>Gallery</h1>
+      <div id="galleryCont">
+        <div id="imgUploadField">
+          <input type="file" onChange={handleChange} />
+          <button onClick={handleUpload}>Upload</button>
+        </div>
+        <div id="message">{message && <p>{message}</p>}</div>
+
+        <div id="imageContainer">
+          {urls.map((url, index) => (
+            <img
+              key={index}
+              src={url}
+              alt="Uploaded"
+              height="auto"
+              width="auto"
+            />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
