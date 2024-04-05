@@ -10,16 +10,19 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDxX98ZxNczF4OH5oxNIoochInxPWQKa2k",
-  authDomain: "scp-crud-app-final.firebaseapp.com",
-  projectId: "scp-crud-app-final",
-  storageBucket: "scp-crud-app-final.appspot.com",
-  messagingSenderId: "213113067191",
-  appId: "1:213113067191:web:fa29cb0de19c7a44bedf32",
-  measurementId: "G-J64PLREZTB",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_APP_ID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

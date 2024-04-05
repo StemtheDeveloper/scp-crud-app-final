@@ -7,6 +7,7 @@ import CRUD from "../pages/CRUD.js";
 import UploadJSON from "../pages/UploadJSON.js";
 import Gallery from "../pages/Gallery.js";
 import SignIn from "../pages/SignIn.js";
+import SignUp from "../pages/SignUp.js";
 import Profile from "../pages/Profile.js";
 import "../styles/App.css";
 
@@ -22,6 +23,7 @@ function App() {
             <Route path="/UploadJSON" element={<UploadJSON />} />
             <Route path="/Gallery" element={<Gallery />} />
             <Route path="/SignIn" element={<SignIn />} />
+            <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Profile" element={<Profile />} />
           </Routes>
         </div>

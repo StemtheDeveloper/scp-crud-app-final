@@ -108,6 +108,9 @@ export default function Nav() {
             <NavLink to="/SignIn">Sign In</NavLink>
           </li>
           <li>
+            <NavLink to="/SignUp">Sign Up</NavLink>
+          </li>
+          <li>
             <NavLink to="/Profile">Profile</NavLink>
           </li>
         </ul>

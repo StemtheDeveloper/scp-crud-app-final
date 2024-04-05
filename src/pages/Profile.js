@@ -128,25 +128,31 @@ function Profile() {
   };
 
   const crudUpdate = async () => {
-    const updateUser = doc(db, "users", id);
-    await updateDoc(updateUser, {
-      ID: id,
-      First_Name: firstName,
-      Surname: surname,
-      Email: email,
-      Phone_Number: phoneNumber,
-      Bio: bio,
-      Profile_Photo_Url: imageUrl,
-    });
+    if (user) {
+      const updateUser = doc(db, "users", user.uid);
+      await updateDoc(updateUser, {
+        First_Name: firstName,
+        Surname: surname,
+        Email: email,
+        Phone_Number: phoneNumber,
+        Bio: bio,
+        Profile_Photo_Url: imageUrl,
+      });
 
-    setShowDoc(false);
-    setId("");
-    setFirstName("");
-    setSurname("");
-    setEmail("");
-    setPhoneNumber("");
-    setBio("");
-    setImageUrl("");
+      // Fetch the updated data
+      const docSnap = await getDoc(updateUser);
+      if (docSnap.exists()) {
+        setReadData(docSnap.data());
+      }
+
+      setShowDoc(false);
+      setFirstName("");
+      setSurname("");
+      setEmail("");
+      setPhoneNumber("");
+      setBio("");
+      setImageUrl("");
+    }
   };
   const handleSignOut = async () => {
     try {
